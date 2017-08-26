@@ -1,0 +1,17 @@
+~$
+\.orig$
+
+\.pyc$
+
+^\.ipynb
+^\.tox/
+^\.env/
+^\.cache/
+
+\.egg$
+\.egg-info/
+^build/
+^dist/
+
+^\.venv/
+^\.conda/
