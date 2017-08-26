@@ -74,9 +74,11 @@ def which(executable):
     """
     Find `executable` in ``node_modules/.bin/`` of current Python environment
 
-    :return: Absolute ``path.Path`` instance
+    :return: Absolute ``path.Path`` instance or ``None``
     """
-    return Path(shutil.which(executable, path=NODE_MODULES_DIR / '.bin'))
+    path = shutil.which(executable, path=NODE_MODULES_DIR / '.bin')
+    if path is not None:
+        return Path(path)
 
 
 def Popen(executable, args=None, **kwargs):
