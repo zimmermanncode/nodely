@@ -46,10 +46,23 @@ NODE_MODULES_DIR = Path(sys.prefix) / 'node_modules'
 
 def install(package):
     """
-    Install a Node.js `package` into ``node_modules/`` of current Python
+    Install given Node.js `package` into ``node_modules/`` of current Python
     environment
     """
     command = ['npm', 'install', package]
+    with Path(sys.prefix):
+        status = zetup.call(command)
+    if status:
+        raise RuntimeError("Command {} failed with status {}"
+                           .format(command, status))
+
+
+def uninstall(package):
+    """
+    Uninstall given Node.js `package` from ``node_modules/`` of current Python
+    environment
+    """
+    command = ['npm', 'uninstall', package]
     with Path(sys.prefix):
         status = zetup.call(command)
     if status:
