@@ -76,7 +76,7 @@ def which(executable):
 
     :return: Absolute ``path.Path`` instance
     """
-    return shutil.which(executable, path=NODE_MODULES_DIR / '.bin')
+    return Path(shutil.which(executable, path=NODE_MODULES_DIR / '.bin'))
 
 
 def Popen(executable, args=None, **kwargs):
