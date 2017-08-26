@@ -71,6 +71,10 @@ class Module(ModuleType):
 
         :raises OSError: if executable can not be found
         """
+        # don't treat special Python member names as Node.js commands
+        if cmdname.startswith('__'):
+            raise AttributeError("{!r} has no attribute {!r}"
+                                 .format(self, cmdname))
         return self[cmdname]
 
     def __dir__(self):
