@@ -1,0 +1,26 @@
+sudo: false
+
+language: python
+python:
+  - '2.7'
+  - '3.3'
+  - '3.4'
+  - '3.5'
+  - '3.6'
+  - pypy
+
+install:
+  - pip install -U pip setuptools
+  - pip install -U -r requirements.txt
+  - pip install -U -r requirements.test.txt
+  - pip install -U tox tox-travis
+
+script:
+  - py.test -vv nodely --doctest-modules
+  - tox -rv
+
+deploy:
+  provider: pypi
+  user: userzimmermann
+  password:
+    secure: LQOAztbX/2aayAqjmEQwJ4133qEndXP2G+AqNrodfh0u0a0PzyOZ+qSSpz/3XEC/k22Q8sP5D34PIddLB7A72IBhfH7Ihldkwhz+7XhG6X7c1UhcsJrf9y23/JTIzQWQLhgD0SovY6+Z3enHCIYoTwbtGPQ8cFW74fBXS0K9FkUp98zGBWuOTOP0WOgaG6M8XEtf8I6OU9+KkYRuAc/NAKGtVI5Dx7p5cK1CEXUT2RMJfM65m1dMdJoqYI3ehscYk8q5WeU6GY6G7mz2+AD+SNIt9Hi6AfoQFM1EX7b8qfjdLpRrO/LAuSHMB/sLaf8/1z9l5TRKyRXKVa9CWH1qbuoLdIThChdzysLlkm2iNuU52v0Ai2J52mn6vgXxsisMWpfEWP2LTqujmYzACt0woe83GlU7bjDU6MQkQ9EtMI5RuPHB806/oJ+/rjN1q+bId22dzpqzktKAMG0O+A1NLes+21yRRx483y6564JSs0HN0/znxIHKH5JlX5XJok60j/Afeu6hLYjphJ27fyEXEU6MfhBxBI7zyVGKA68oWIY7US7qgCaRW4gV34iJt/ssat/7QaokEpZ6LQOUN35c3puS3l3p+YNaZ9I39kfE11PzESIAQH/rF/4Zlr71iaGVjjsI3VzY4F8CfcKfKnHScgt0J+KXEvDNktC5vAVCJso=
