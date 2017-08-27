@@ -97,6 +97,12 @@ Just install the Node.js package:
 >>> nodely.install('coffee-script')
 ```
 
+```
+npm http GET https://registry.npmjs.org/coffee-script
+npm http 304 https://registry.npmjs.org/coffee-script
+coffee-script@1.12.7 node_modules\coffee-script
+```
+
 
 It provides the `coffee` executable. If you want to know its absolute path:
 
@@ -118,6 +124,10 @@ And if you want to run it, for example with the `--version` flag:
 ```python
 >>> nodely.call('coffee', ['--version'])
 0
+```
+
+```
+CoffeeScript version 1.12.7
 ```
 
 
@@ -201,3 +211,6 @@ and can also be called directly instead of using its `.call` method:
 0
 ```
 
+```
+CoffeeScript version 1.12.7
+```
