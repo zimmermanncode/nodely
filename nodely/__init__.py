@@ -36,7 +36,7 @@ __all__ = ['install', 'which', 'Popen', 'call']
 
 #: The absolute path to the local node_modules/ sub-directory used for
 #  installing Node.js packages under the python environment root
-NODE_MODULES_DIR = Path(sys.prefix) / 'node_modules'
+NODE_MODULES_DIR = (Path(sys.prefix) / 'node_modules').mkdir_p()
 
 # create a dummy package.json in python environment root for making npm
 # install packages to node_modules/ sub-directory defined above
