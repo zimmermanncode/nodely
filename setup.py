@@ -19,8 +19,10 @@ setup(
     setup_requires=open(os.path.join(ROOT, 'requirements.setup.txt')).read(),
     install_requires=open(os.path.join(ROOT, 'requirements.txt')).read(),
 
-    use_scm_version={'write_to': 'nodely/__version__.py'},
-
+    use_scm_version={
+        'local_scheme': lambda _: '',
+        'write_to': 'nodely/__version__.py',
+    },
     packages=[
         'nodely',
     ],
