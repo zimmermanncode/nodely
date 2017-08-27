@@ -16,7 +16,7 @@ install:
   - pip install -U tox tox-travis
 
 script:
-  - py.test -vv nodely test --doctest-modules
+  - py.test -vv nodely test --doctest-modules --cov=nodely --cov-report=term-missing --cov-fail-under=100
   - tox -rv
 
 deploy:
