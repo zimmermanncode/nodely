@@ -20,8 +20,10 @@
 
 
 
-* [Embed](#Embed-node_modules/-in-Python-environments) `node_modules/` in Python environments
-* [Run](#Run-installed-Node.js-tools-from-Python) installed Node.js tools from Python
+* [**Embed**](#Embed-node_modules/-in-Python-environments)
+  **`node_modules/` in Python environments**
+* [**Run**](#Run-installed-Node.js-tools-from-Python)
+  **installed Node.js tools from Python**
 
 
 
@@ -44,7 +46,7 @@ And don't forget to install [Node.js](https://nodejs.org) ;)
 
 
 ```python
-import nodely
+>>> import nodely
 ```
 
 
@@ -92,7 +94,7 @@ Just install the Node.js package:
 
 
 ```python
-nodely.install('coffee-script')
+>>> nodely.install('coffee-script')
 ```
 
 
@@ -146,10 +148,10 @@ and give any `subprocess.Popen` options to it:
 
 
 ```python
-from subprocess import PIPE
-
-process = nodely.Popen('coffee', ['--version'], stdout=PIPE,
-                       universal_newlines=True)
+>>> from subprocess import PIPE
+>>> 
+>>> process = nodely.Popen('coffee', ['--version'], stdout=PIPE,
+...                        universal_newlines=True)
 ```
 
 
@@ -167,7 +169,7 @@ A more object-oriented approach is provided by:
 
 
 ```python
-import nodely.bin
+>>> import nodely.bin
 ```
 
 
@@ -178,7 +180,7 @@ and creates `nodely.bin.Command` instances:
 
 
 ```python
-coffee = nodely.bin.coffee
+>>> coffee = nodely.bin.coffee
 ```
 
 
