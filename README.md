@@ -9,14 +9,14 @@
 [![](https://img.shields.io/pypi/pyversions/nodely.svg)](
   https://python.org)
 [![](https://img.shields.io/pypi/v/nodely.svg)](
-  https://pypi.python.org/pypi/ganymede)
+  https://pypi.python.org/pypi/nodely)
 [![](https://img.shields.io/pypi/dd/nodely.svg)](
-  https://pypi.python.org/pypi/ganymede)
+  https://pypi.python.org/pypi/nodely)
 
 
 
 [![](https://travis-ci.org/zimmermanncode/nodely.svg)](
-  https://travis-ci.org/zimmermanncode/ganymede)
+  https://travis-ci.org/zimmermanncode/nodely)
 
 
 
