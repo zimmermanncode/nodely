@@ -4,6 +4,7 @@ import re
 import sys
 
 from path import Path
+import pytest
 
 import nodely
 
@@ -24,6 +25,11 @@ def test_install(node_package):
     assert not node_package_dir.exists()
     nodely.install(node_package)
     assert node_package_dir.isdir()
+
+
+def test_install_non_existent():
+    with pytest.raises(RuntimeError):
+        nodely.install('non-existent')
 
 
 def test_which(node_package, node_package_command):

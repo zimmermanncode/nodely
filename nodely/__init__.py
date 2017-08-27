@@ -68,7 +68,7 @@ def uninstall(package):
     command = ['npm', 'uninstall', package]
     with Path(sys.prefix):
         status = zetup.call(command)
-    if status:
+    if status:  # pragma: no cover
         raise RuntimeError("Command {!r} failed with status {}"
                            .format(command, status))
 
