@@ -65,22 +65,26 @@ class Module(ModuleType):
         """
         return Command(cmdname)
 
-    def __getattr__(self, cmdname):
+    def __getattr__(self, name):
         """
-        Get a :class:`nodely.bin.Command` instance for given `cmdname`
+        Get a :class:`nodely.bin.Command` instance for given command `name`
 
         :raises OSError: if executable can not be found
         """
-        # don't treat special Python member names as Node.js commands
-        if cmdname.startswith('__'):
+        try:  # first check if original module has the given attribute
+            return getattr(ORIGIN, name)
+        except AttributeError:
+            pass
+        # and don't treat special Python member names as Node.js commands
+        if name.startswith('__'):
             raise AttributeError("{!r} has no attribute {!r}"
-                                 .format(self, cmdname))
-        return self[cmdname]
+                                 .format(self, name))
+        return self[name]
 
     def __dir__(self):
         cmdnames = (f.basename()
                     for f in (NODE_MODULES_DIR / '.bin').files())
-        if WIN:
+        if WIN:  # pragma: no cover
             cmdnames = (cmd for cmd in cmdnames if not cmd.ext == '.cmd')
         return super(Module, self).__dir__() + list(cmdnames)
 
@@ -104,7 +108,7 @@ class Command(zetup.object, Path):
         :raises OSError:
            if executable can not be found
         """
-        if WIN:
+        if WIN:  # pragma: no cover
             name += '.cmd'
         cmd = Path.__new__(cls, NODE_MODULES_DIR / '.bin' / name)
         cmd.atime  # HACK: raises OSError if not existing
@@ -122,7 +126,8 @@ class Command(zetup.object, Path):
         The name of this Node.js command
         """
         name = Path(self).basename()
-        if WIN:  # remove .cmd file extension
+        if WIN:  # pragma: no cover
+            # remove .cmd file extension
             name = name.splitext()[0]
         return str(name)
 
