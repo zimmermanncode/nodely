@@ -85,7 +85,7 @@ class Module(ModuleType):
         cmdnames = (f.basename()
                     for f in (NODE_MODULES_DIR / '.bin').files())
         if WIN:  # pragma: no cover
-            cmdnames = (cmd for cmd in cmdnames if not cmd.ext == '.cmd')
+            cmdnames = (cmd for cmd in cmdnames if cmd.ext.lower() != '.cmd')
         return super(Module, self).__dir__() + list(cmdnames)
 
 
