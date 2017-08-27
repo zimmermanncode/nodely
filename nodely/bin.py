@@ -86,7 +86,7 @@ class Module(ModuleType):
                     for f in (NODE_MODULES_DIR / '.bin').files())
         if WIN:  # pragma: no cover
             cmdnames = (cmd for cmd in cmdnames if cmd.ext.lower() != '.cmd')
-        return super(Module, self).__dir__() + list(cmdnames)
+        return dir(ORIGIN) + list(cmdnames)
 
 
 # replace nodely.bin module with wrapper instance
