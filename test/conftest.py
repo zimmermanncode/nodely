@@ -2,10 +2,17 @@ import re
 
 import pytest
 
+import nodely
+
 
 @pytest.fixture
 def node_package():
     return 'coffee-script'
+
+
+@pytest.fixture
+def install_node_package(node_package):
+    nodely.install(node_package)
 
 
 @pytest.fixture
