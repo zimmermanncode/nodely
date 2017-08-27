@@ -4,6 +4,22 @@
 
 
 
+[![](http://www.gnu.org/graphics/lgplv3-88x31.png)](
+  https://gnu.org/licenses/lgpl.html)
+[![](https://img.shields.io/pypi/pyversions/nodely.svg)](
+  https://python.org)
+[![](https://img.shields.io/pypi/v/nodely.svg)](
+  https://pypi.python.org/pypi/ganymede)
+[![](https://img.shields.io/pypi/dd/nodely.svg)](
+  https://pypi.python.org/pypi/ganymede)
+
+
+
+[![](https://travis-ci.org/zimmermanncode/nodely.svg)](
+  https://travis-ci.org/zimmermanncode/ganymede)
+
+
+
 * [Embed](#Embed-node_modules/-in-Python-environments) `node_modules/` in Python environments
 * [Run](#Run-installed-Node.js-tools-from-Python) installed Node.js tools from Python
 
@@ -87,7 +103,7 @@ It provides the `coffee` executable. If you want to know its absolute path:
 
 ```python
 >>> nodely.which('coffee')
-'C:\\Users\\Zimmermann\\Miniconda3\\envs\\nodely\\node_modules\\.bin\\coffee.CMD'
+Path('C:\\Users\\Zimmermann\\Miniconda3\\envs\\nodely\\node_modules\\.bin\\coffee.CMD')
 ```
 
 
