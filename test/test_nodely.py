@@ -1,4 +1,4 @@
-from subprocess import call, PIPE
+from subprocess import PIPE
 import platform
 import re
 import sys
@@ -41,18 +41,18 @@ def test_which(node_package, node_package_command):
     assert nodely.which('non-existent') is None
 
 
-def test_call(capfd, node_package_command, node_package_command_args,
-              node_package_command_output_regex):
-    assert nodely.call(node_package_command, node_package_command_args) is 0
-    out, err = capfd.readouterr()
-    assert node_package_command_output_regex.match(out.strip())
-    assert not err
-
-
 def test_Popen(node_package_command, node_package_command_args,
                node_package_command_output_regex):
     process = nodely.Popen(node_package_command, node_package_command_args,
                            stdout=PIPE, stderr=PIPE, universal_newlines=True)
     out, err = process.communicate()
+    assert node_package_command_output_regex.match(out.strip())
+    assert not err
+
+
+def test_call(capfd, node_package_command, node_package_command_args,
+              node_package_command_output_regex):
+    assert nodely.call(node_package_command, node_package_command_args) is 0
+    out, err = capfd.readouterr()
     assert node_package_command_output_regex.match(out.strip())
     assert not err
