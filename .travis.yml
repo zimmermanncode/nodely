@@ -11,12 +11,12 @@ python:
 
 install:
   - pip install -U pip setuptools
-  - pip install -U -r requirements.txt
+  - pip install -e .
   - pip install -U -r requirements.test.txt
   - pip install -U tox tox-travis
 
 script:
-  - py.test -vv nodely --doctest-modules
+  - py.test -vv nodely test --doctest-modules
   - tox -rv
 
 deploy:
