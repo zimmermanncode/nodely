@@ -28,6 +28,9 @@ import sys
 from path import Path
 import zetup
 
+# __version__ module is created by setuptools_scm during setup
+from .__version__ import version as __version__
+
 __all__ = ['install', 'which', 'Popen', 'call']
 
 
