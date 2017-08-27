@@ -56,7 +56,7 @@ def install(package):
     with Path(sys.prefix):
         status = zetup.call(command)
     if status:
-        raise RuntimeError("Command {} failed with status {}"
+        raise RuntimeError("Command {!r} failed with status {}"
                            .format(command, status))
 
 
@@ -69,7 +69,7 @@ def uninstall(package):
     with Path(sys.prefix):
         status = zetup.call(command)
     if status:
-        raise RuntimeError("Command {} failed with status {}"
+        raise RuntimeError("Command {!r} failed with status {}"
                            .format(command, status))
 
 
