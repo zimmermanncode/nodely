@@ -22,10 +22,10 @@ putMORE Node.js into Python
 """
 
 import json
-import shutil
 import sys
 
 from path import Path
+import whichcraft
 import zetup
 
 # __version__ module is created by setuptools_scm during setup
@@ -79,7 +79,7 @@ def which(executable):
 
     :return: Absolute ``path.Path`` instance or ``None``
     """
-    path = shutil.which(executable, path=NODE_MODULES_DIR / '.bin')
+    path = whichcraft.which(executable, path=NODE_MODULES_DIR / '.bin')
     if path is not None:
         return Path(path)
 
