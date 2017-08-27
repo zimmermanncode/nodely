@@ -46,6 +46,9 @@ NODE_MODULES_DIR = (Path(sys.prefix) / 'node_modules').mkdir_p()
     'repository': "https://github.com/zimmermanncode/nodely",
 }))
 
+# and make sure that the node_modules/.bin/ dir always exists
+(NODE_MODULES_DIR / '.bin').mkdir_p()
+
 
 def install(package):
     """
