@@ -47,7 +47,12 @@ setup(
     ],
     keywords=[
         'nodely', 'nodejs', 'node', 'npm', 'npmjs',
+        'nodejspackages', 'nodejspackage', 'nodejsmodules', 'nodejsmodule',
+        'nodepackages', 'nodepackage', 'nodemodules', 'nodemodule',
+        'npmpackages', 'npmpackage', 'npmmodules', 'npmmodule',
+        'packages', 'package', 'nodemodules', 'modules', 'module', 'bin',
         'javascript', 'js', 'ecmascript', 'ecma', 'es',
-        'install', 'which', 'subprocess', 'popen', 'call',
+        'install', 'uninstall', 'which', 'subprocess', 'popen', 'call',
+        'more', 'tools', 'tool',
     ],
 )
