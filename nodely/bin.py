@@ -121,7 +121,7 @@ class Command(zetup.object, Path):
         pass
 
     @property
-    def cmdname(self):
+    def name(self):
         """
         The name of this Node.js command
         """
@@ -160,4 +160,4 @@ class Command(zetup.object, Path):
         return self.call(cmdargs, **kwargs)
 
     def __repr__(self):
-        return "{}[{!r}]".format(__name__, self.cmdname)
+        return "{}[{!r}]".format(__name__, self.name)

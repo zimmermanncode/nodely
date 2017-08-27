@@ -70,8 +70,9 @@ class TestCommand(object):
         with pytest.raises((IOError, OSError)):
             Command('non_existent')
 
-    def test_cmdname(self, node_package_command):
-        assert Command(node_package_command).cmdname == node_package_command
+    def test_name(self, node_package_command):
+        assert Command.name is not Path.name
+        assert Command(node_package_command).name == node_package_command
 
     def test_Popen(self, node_package_command, node_package_command_args,
                    node_package_command_output_regex):
