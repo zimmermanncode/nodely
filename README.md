@@ -122,6 +122,11 @@ And if you want to run it, for example with the `--version` flag:
 
 
 
+For the case that you want to get rid of the package again,
+just `nodely.uninstall('coffee-script')` it
+
+
+
 ### Run installed Node.js tools from Python
 
 
