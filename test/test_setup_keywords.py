@@ -16,6 +16,16 @@ def test_require_node_modules(node_package):
     assert node_package_dir.isdir()
 
 
+def test_require_node_modules_from_string(node_package):
+    node_package_dir = nodely.NODE_MODULES_DIR / node_package
+    nodely.uninstall(node_package)
+    assert not node_package_dir.exists()
+    require_node_modules(dist=None, jsmodules="""
+    {}
+    """.format(node_package))
+    assert node_package_dir.isdir()
+
+
 def test_require_node_modules_with_wrong_keyword():
     with pytest.raises(AssertionError):
         require_node_modules(dist=None, keyword='wrong')
