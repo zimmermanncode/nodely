@@ -31,7 +31,7 @@ import zetup
 # __version__ module is created by setuptools_scm during setup
 from .__version__ import version as __version__
 
-__all__ = ['install', 'uninstall', 'which', 'Popen', 'call']
+__all__ = ('install', 'uninstall', 'which', 'Popen', 'call')
 
 
 #: The absolute path to the local node_modules/ sub-directory used for

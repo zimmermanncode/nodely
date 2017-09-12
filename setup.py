@@ -26,6 +26,9 @@ setup(
     packages=[
         'nodely',
     ],
+    entry_points={'distutils.setup_keywords': [
+        'require_node_modules = nodely.setup_keywords:require_node_modules',
+    ]},
 
     classifiers=[
         'Development Status :: 4 - Beta',
