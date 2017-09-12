@@ -22,6 +22,8 @@
 
 * [**Embed**](#Embed-node_modules/-in-Python-environments)
   **`node_modules/` in Python environments**
+* [**`require`**](#require_node_modules-in-setup.py)**`_node_modules`
+  in setup.py** 
 * [**Run**](#Run-installed-Node.js-tools-from-Python)
   **installed Node.js tools from Python**
 
@@ -137,11 +139,38 @@ just `nodely.uninstall('coffee-script')` it
 
 
 
+### `require_node_modules` in setup.py
+
+
+
+Instead of installing Node.js packages during runtime,
+you can also define them as dependencies of your Python package:
+
+
+
+```python
+from setuptools import setup
+
+setup(
+    ...
+    setup_requires=['nodely', ...],
+    require_node_modules=['coffee-script', ...],
+    ...
+)
+```
+
+
+
+So they get implicitly installed during the installation of the Python package,
+just like the Python dependencies defined in `install_requires`
+
+
+
 ### Run installed Node.js tools from Python
 
 
 
-The `nodely.call` function above additionally supports `subprocess.call` options:
+The `nodely.call` function additionally supports `subprocess.call` options:
 
 
 
