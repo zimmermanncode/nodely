@@ -5,6 +5,7 @@ import pytest
 import zetup
 
 from nodely.setup_keywords import require_node_modules
+import nodely
 
 
 def test_require_node_modules(node_package):
@@ -19,6 +20,13 @@ def test_require_node_modules_with_wrong_keyword():
     with pytest.raises(AssertionError):
         require_node_modules(dist=None, keyword='wrong')
 
+
+def test_require_node_modules_without_jsmodules():
+    node_package_dir = nodely.NODE_MODULES_DIR / node_package
+    nodely.uninstall(node_package)
+    node_package_dir_content = node_package_dir.listdir()
+    require_node_modules(dist=None)
+    assert node_package_dir_content == node_package_dir.listdir()
 
 def test_setup(node_package):
     node_package_dir = nodely.NODE_MODULES_DIR / node_package
