@@ -7,9 +7,12 @@
 ^\.tox/
 ^\.env/
 ^\.cache/
+^\.coverage
 
 \.egg$
 \.egg-info/
+^\.eggs/
+
 ^build/
 ^dist/
 
