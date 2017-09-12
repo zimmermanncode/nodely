@@ -21,7 +21,7 @@ def test_require_node_modules_with_wrong_keyword():
         require_node_modules(dist=None, keyword='wrong')
 
 
-def test_require_node_modules_without_jsmodules():
+def test_require_node_modules_without_jsmodules(node_package):
     node_package_dir = nodely.NODE_MODULES_DIR / node_package
     nodely.uninstall(node_package)
     node_package_dir_content = node_package_dir.listdir()
