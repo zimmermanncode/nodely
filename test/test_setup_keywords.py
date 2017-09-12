@@ -22,11 +22,10 @@ def test_require_node_modules_with_wrong_keyword():
 
 
 def test_require_node_modules_without_jsmodules(node_package):
-    node_package_dir = nodely.NODE_MODULES_DIR / node_package
     nodely.uninstall(node_package)
-    node_package_dir_content = node_package_dir.listdir()
+    node_modules_content = nodely.NODE_MODULES_DIR.listdir()
     require_node_modules(dist=None)
-    assert node_package_dir_content == node_package_dir.listdir()
+    assert node_modules_content == nodely.NODE_MODULES_DIR.listdir()
 
 def test_setup(node_package):
     node_package_dir = nodely.NODE_MODULES_DIR / node_package
