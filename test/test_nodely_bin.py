@@ -47,8 +47,9 @@ class TestModule(object):
     def test__getattr__non_existent__special__(self):
         with pytest.raises(AttributeError) as exc:
             getattr(nodely.bin, '__non_existent__')
-        exc.match(r"^{!r} has no attribute '__non_existent__'$"
-                  .format(nodely.bin).replace('\\', r'\\'))
+        exc.match(
+            r"^{!r} has no attribute '__non_existent__'$"
+            .format(nodely.bin).replace('\\', r'\\'))
 
     def test__dir__(self):
         cmdnames = (f.basename()
@@ -74,34 +75,59 @@ class TestCommand(object):
         assert Command.name is not Path.name
         assert Command(node_package_command).name == node_package_command
 
-    def test_Popen(self, node_package_command, node_package_command_args,
-                   node_package_command_output_regex):
+    def test_Popen(
+            self, node_package_command, node_package_command_args,
+            node_package_command_output_regex):
         command = Command(node_package_command)
         process = command.Popen(
             node_package_command_args, stdout=PIPE, stderr=PIPE,
             universal_newlines=True)
+
         out, err = process.communicate()
         assert node_package_command_output_regex.match(out.strip())
         assert not err
 
-    def test_call(self, capfd, node_package_command,
-                  node_package_command_args,
-                  node_package_command_output_regex):
+    def test_call(
+            self, capfd, node_package_command, node_package_command_args,
+            node_package_command_output_regex):
         command = Command(node_package_command)
         assert command.call(node_package_command_args) is 0
+
         out, err = capfd.readouterr()
         assert node_package_command_output_regex.match(out.strip())
         assert not err
 
-    def test__call__(self, capfd, node_package_command,
-                     node_package_command_args,
-                     node_package_command_output_regex):
+    def test_check_call(
+            self, capfd, node_package_command, node_package_command_args,
+            node_package_command_output_regex):
         command = Command(node_package_command)
-        assert command(node_package_command_args) is 0
+        assert command.check_call(node_package_command_args) is None
+
         out, err = capfd.readouterr()
         assert node_package_command_output_regex.match(out.strip())
         assert not err
+
+    def test_check_output(
+            self, capfd, node_package_command, node_package_command_args,
+            node_package_command_output_regex):
+        command = Command(node_package_command)
+        assert node_package_command_output_regex.match(
+            command.check_output(node_package_command_args))
+
+        out, err = capfd.readouterr()
+        assert not out and not err
+
+    def test__call__(
+            self, capfd, node_package_command, node_package_command_args,
+            node_package_command_output_regex):
+        command = Command(node_package_command)
+        assert node_package_command_output_regex.match(
+            command.check_output(node_package_command_args))
+
+        out, err = capfd.readouterr()
+        assert not out and not err
 
     def test__repr__(self, node_package_command):
-        assert repr(Command(node_package_command)) \
-            == "nodely.bin[{!r}]".format(node_package_command)
+        assert (
+            repr(Command(node_package_command)) ==
+            "nodely.bin['{}']".format(node_package_command))
