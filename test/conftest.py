@@ -5,9 +5,12 @@ import pytest
 import nodely
 
 
+NODE_PACKAGE = 'coffee-script'
+
+
 @pytest.fixture
 def node_package():
-    return 'coffee-script'
+    return NODE_PACKAGE
 
 
 @pytest.fixture

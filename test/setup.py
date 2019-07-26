@@ -26,5 +26,5 @@ setup(
         'root': '..',
         'local_scheme': lambda _: '',
     },
-    require_node_modules=[conftest.node_package()],
+    require_node_modules=[conftest.NODE_PACKAGE],
 )
