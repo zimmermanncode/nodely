@@ -136,7 +136,8 @@ class TestCommand(object):
             node_package_command_output_regex):
         command = Command(node_package_command)
         assert node_package_command_output_regex.match(
-            command.check_output(node_package_command_args))
+            command.check_output(
+                node_package_command_args, universal_newlines=True))
 
         out, err = capfd.readouterr()
         assert not out and not err
@@ -159,7 +160,7 @@ class TestCommand(object):
             node_package_command_output_regex):
         command = Command(node_package_command)
         assert node_package_command_output_regex.match(
-            command(*node_package_command_args))
+            command(*node_package_command_args, universal_newlines=True))
 
         out, err = capfd.readouterr()
         assert not out and not err
