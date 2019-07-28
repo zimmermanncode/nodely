@@ -17,6 +17,7 @@ install:
 
 script:
   - py.test -vv test --cov=nodely --cov-report=term-missing --cov-fail-under=100
+  - robot test
   - tox -rv
 
 deploy:

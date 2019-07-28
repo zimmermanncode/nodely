@@ -1,16 +1,21 @@
 import re
 
 import pytest
+from path import Path
 
 import nodely
 
 
-NODE_PACKAGE = 'coffee-script'
+TEST_DIR = (
+    Path(__file__)  # pylint: disable=no-value-for-parameter
+    .realpath().dirname())
+
+exec((TEST_DIR / 'variables.py').text())
 
 
 @pytest.fixture
 def node_package():
-    return NODE_PACKAGE
+    return NODE_PACKAGE  # pylint: disable=undefined-variable
 
 
 @pytest.fixture

@@ -37,10 +37,12 @@ def test_require_node_modules_without_jsmodules(node_package):
     require_node_modules(dist=None)
     assert node_modules_content == nodely.NODE_MODULES_DIR.listdir()
 
-def test_setup(node_package):
-    node_package_dir = nodely.NODE_MODULES_DIR / node_package
-    nodely.uninstall(node_package)
-    assert not node_package_dir.exists()
-    zetup.call([sys.executable, 'setup.py', 'develop'],
-               cwd=os.path.dirname(os.path.realpath(__file__)))
-    assert node_package_dir.isdir()
+
+# def test_setup(node_package):
+#     node_package_dir = nodely.NODE_MODULES_DIR / node_package
+#     nodely.uninstall(node_package)
+#     assert not node_package_dir.exists()
+#     zetup.call(
+#         [sys.executable, 'setup.py', 'develop'],
+#         cwd=os.path.dirname(os.path.realpath(__file__)))
+#     assert node_package_dir.isdir()
