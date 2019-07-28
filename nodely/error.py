@@ -22,4 +22,4 @@ class NodeCommandError(CalledProcessError, zetup.object):
 
     def __str__(self):
         return "{} in working directory {!r}".format(
-            super(NodeCommandError, self).__str__(), self.cwd)
+            super(NodeCommandError, self).__str__().rstrip("."), self.cwd)
