@@ -1,11 +1,14 @@
-from subprocess import PIPE
+import os
 import platform
+import re
+from subprocess import PIPE, STDOUT
 
-from path import Path
 import pytest
+from path import Path
 
-from nodely.bin import Command
 import nodely.bin
+from nodely import NodeCommandError
+from nodely.bin import Command
 
 
 WIN = platform.system() == 'Windows'
@@ -84,8 +87,19 @@ class TestCommand(object):
             universal_newlines=True)
 
         out, err = process.communicate()
+        assert process.returncode is 0
         assert node_package_command_output_regex.match(out.strip())
         assert not err
+
+    def test_Popen_non_zero_returncode(self, node_package_command):
+        command = Command(node_package_command)
+        process = command.Popen(
+            '--non-existent', stdout=PIPE, stderr=PIPE,
+            universal_newlines=True)
+
+        out, err = process.communicate()
+        assert process.returncode is not 0
+        assert not out and err
 
     def test_call(
             self, capfd, node_package_command, node_package_command_args,
@@ -97,15 +111,25 @@ class TestCommand(object):
         assert node_package_command_output_regex.match(out.strip())
         assert not err
 
-    def test_check_call(
-            self, capfd, node_package_command, node_package_command_args,
-            node_package_command_output_regex):
+    def test_call_non_zero_returncode(self, capfd, node_package_command,):
         command = Command(node_package_command)
-        assert command.check_call(node_package_command_args) is None
+        assert command.call(['--non-existent']) is not 0
 
         out, err = capfd.readouterr()
-        assert node_package_command_output_regex.match(out.strip())
-        assert not err
+        assert not out and err
+
+    def test_check_call_raises(self, capfd, node_package_command):
+        command = Command(node_package_command)
+        with pytest.raises(NodeCommandError, match=(
+                r"^Command '\[[^,]+, '--non-existent'\]' "
+                r"returned non-zero exit status -?\d+ "
+                r"in working directory {}$"
+                .format(re.escape(repr(os.getcwd()))))):
+
+            command.check_call(['--non-existent'])
+
+        out, err = capfd.readouterr()
+        assert not out and err
 
     def test_check_output(
             self, capfd, node_package_command, node_package_command_args,
@@ -117,12 +141,38 @@ class TestCommand(object):
         out, err = capfd.readouterr()
         assert not out and not err
 
+    def test_check_output_raises(self, capfd, node_package_command):
+        command = Command(node_package_command)
+        with pytest.raises(NodeCommandError, match=(
+                r"^Command '\[[^,]+, '--non-existent'\]' "
+                r"returned non-zero exit status -?\d+ "
+                r"in working directory {}$"
+                .format(re.escape(repr(os.getcwd()))))):
+
+            command.check_output(['--non-existent'], stderr=STDOUT)
+
+        out, err = capfd.readouterr()
+        assert not out and not err
+
     def test__call__(
             self, capfd, node_package_command, node_package_command_args,
             node_package_command_output_regex):
         command = Command(node_package_command)
         assert node_package_command_output_regex.match(
-            command.check_output(node_package_command_args))
+            command(*node_package_command_args))
+
+        out, err = capfd.readouterr()
+        assert not out and not err
+
+    def test__call__raises(self, capfd, node_package_command):
+        command = Command(node_package_command)
+        with pytest.raises(NodeCommandError, match=(
+                r"^Command '\[[^,]+, '--non-existent', '--and-invalid'\]' "
+                r"returned non-zero exit status -?\d+ "
+                r"in working directory {}$"
+                .format(re.escape(repr(os.getcwd()))))):
+
+            command('--non-existent', '--and-invalid', stderr=STDOUT)
 
         out, err = capfd.readouterr()
         assert not out and not err
