@@ -1,13 +1,22 @@
 ~$
+\.diff$
 \.orig$
 
 \.pyc$
+__pycache__/
+__version__\.py
+
+\.cache/
+\.pytest_cache/
 
 ^\.ipynb
 ^\.tox/
 ^\.env/
-^\.cache/
 ^\.coverage
+
+^output\.xml
+^log\.html
+^report\.html
 
 \.egg$
 \.egg-info/
