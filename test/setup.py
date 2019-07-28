@@ -4,10 +4,10 @@ import sys
 from setuptools import setup
 
 
-ROOT = os.path.dirname(os.path.realpath(__file__))
-sys.path.insert(0, ROOT)
+TEST_DIR = os.path.dirname(os.path.realpath(__file__))
 
-import conftest
+with open(os.path.join(TEST_DIR, 'variables.py')) as varfile:
+    exec(varfile.read())
 
 
 setup(
@@ -26,5 +26,7 @@ setup(
         'root': '..',
         'local_scheme': lambda _: '',
     },
-    require_node_modules=[conftest.NODE_PACKAGE],
+    require_node_modules=[
+        NODE_PACKAGE,  # pylint: disable=undefined-variable
+    ],
 )
