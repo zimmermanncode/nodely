@@ -209,9 +209,13 @@ class Command(zetup.object, Path):
 
         return out
 
-    def __call__(self, cmdargs=None, **kwargs):
-        """Alternative to :meth:`.check_output`."""
-        return self.check_call(cmdargs, **kwargs)
+    def __call__(self, *cmdargs, **kwargs):
+        """
+        Alternative to :meth:`.check_output`.
+
+        Takes `cmdargs` as varargs instead of a sequence parameter
+        """
+        return self.check_output(cmdargs, **kwargs)
 
     def __repr__(self):
         return "{}[{!r}]".format(__name__, self.name)
