@@ -1,4 +1,6 @@
 sudo: false
+git:
+  depth: false
 
 language: python
 python:
