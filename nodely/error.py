@@ -2,11 +2,17 @@
 
 from subprocess import CalledProcessError
 
+import zetup
+
+import nodely
+
 __all__ = ('NodeCommandError', )
 
 
-class NodeCommandError(CalledProcessError):
+class NodeCommandError(CalledProcessError, zetup.object):
     """A Node.js command returned non-zero exit code"""
+
+    __package__ = nodely
 
     def __init__(self, returncode, cmd, cwd):
         super(NodeCommandError, self).__init__(
