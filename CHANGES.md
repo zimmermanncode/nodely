@@ -1,3 +1,17 @@
+### 0.3.0
+
+> 2019-07-28
+
+* Add `.check_call` and `.check_output` methods to `nodely.bin.Command`,
+  the class of the Pythonic `nodely.bin['...']` instances for running
+  installed Node.js tools
+* Make `nodely.bin.Command.__call__` wrap `.check_output` instead of `.call`
+  and take variable `*cmdargs` parameters instead of a single positional
+  `cmdargs` sequence parameter
+* Define `nodely.NodeCommandError` based on `subprocess.CalledProcessError`.
+  It adds the working directory to the basic exception message and is raised
+  from `nodely.bin.Command.check_call` and `.check_output`
+
 ### 0.2.0
 
 > 2017-09-12
