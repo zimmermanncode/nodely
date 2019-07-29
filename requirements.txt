@@ -1,4 +1,4 @@
-zetup >= 0.2.48
+zetup >= 0.2.51
 moretools >= 0.1.10
-path.py >= 11.5
+path.py ~= 11.5  #import path
 whichcraft >= 0.6
