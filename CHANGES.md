@@ -1,3 +1,9 @@
+### 0.3.1
+
+> 2019-07-29
+
+* Restrict requirement `path.py` to `~= 11.5`
+
 ### 0.3.0.post0
 
 > 2019-07-29
