@@ -1,16 +1,19 @@
-import os
-import sys
+import os  # pragma: no coverage
+import sys  # pragma: no coverage
 
-from setuptools import setup
+from setuptools import setup  # pragma: no coverage
 
 
-TEST_DIR = os.path.dirname(os.path.realpath(__file__))
+TEST_DIR = os.path.dirname(  # pragma: no coverage
+    os.path.realpath(__file__))
 
-with open(os.path.join(TEST_DIR, 'variables.py')) as varfile:
+with open(
+        os.path.join(TEST_DIR, 'variables.py')
+) as varfile:  # pragma: no coverage
     exec(varfile.read())
 
 
-setup(
+setup(  # pragma: no coverage
     name='nodely-test',
     description="Test puttingMORE Node.js into Python",
 
