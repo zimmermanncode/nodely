@@ -10,15 +10,15 @@ python:
   - pypy
 
 install:
-  - pip install -U pip setuptools
-  - pip install -e .
+  - pip install -U pip setuptools six wheel
+  - pip install -U -e .
   - pip install -U -r requirements.test.txt
   - pip install -U tox tox-travis
 
 script:
-  - py.test -vv test --cov=nodely --cov-report=term-missing --cov-fail-under=100
+  - py.test -vv --doctest-modules nodely test --cov nodely --cov test --cov-report term-missing --cov-fail-under 100
   - robot test
-  - tox -rv
+  - tox -r -v
 
 deploy:
   provider: pypi
