@@ -22,24 +22,33 @@ putMORE Node.js into Python
 """
 
 import json
+import os
 import sys
 
 from path import Path
+from pkg_resources import get_distribution
 import whichcraft
 import zetup
 
-# __version__ module is created by setuptools_scm during setup
-from .__version__ import version as __version__
-
 from .error import NodeCommandError
 
-__all__ = (
-    'install', 'uninstall', 'which', 'Popen', 'call',
-    'NodeCommandError')
+# HACK: Fix inconsistently hard-coded whichcraft.__version__
+whichcraft.__version__ = get_distribution('whichcraft').version
+
+zetup.toplevel(__name__, [
+    'NodeCommandError',
+    'Popen',
+    'call',
+    'install',
+    'uninstall',
+    'which',
+])
 
 
-#: The absolute path to the local node_modules/ sub-directory used for
-#  installing Node.js packages under the python environment root
+#:  The absolute path to the local ``node_modules/`` sub-directory.
+#
+#   Which is located under the current Python environment root, and which is
+#   used for installing Node.js packages into
 NODE_MODULES_DIR = (Path(sys.prefix) / 'node_modules').mkdir_p()
 
 # create a dummy package.json in python environment root for making npm
@@ -56,33 +65,33 @@ NODE_MODULES_DIR = (Path(sys.prefix) / 'node_modules').mkdir_p()
 
 def install(package):
     """
-    Install given Node.js `package` into ``node_modules/`` of current Python
-    environment
+    Install given Node.js `package`.
+
+    Into ``node_modules/`` of current Python environment
     """
     command = ['npm', 'install', package]
     with Path(sys.prefix):
         status = zetup.call(command)
     if status:
-        raise RuntimeError("Command {!r} failed with status {}"
-                           .format(command, status))
+        raise NodeCommandError(command, status, os.getcwd())
 
 
 def uninstall(package):
     """
-    Uninstall given Node.js `package` from ``node_modules/`` of current Python
-    environment
+    Uninstall given Node.js `package`.
+
+    From ``node_modules/`` of current Python environment
     """
     command = ['npm', 'uninstall', package]
     with Path(sys.prefix):
         status = zetup.call(command)
     if status:  # pragma: no cover
-        raise RuntimeError("Command {!r} failed with status {}"
-                           .format(command, status))
+        raise NodeCommandError(command, status, os.getcwd())
 
 
 def which(executable):
     """
-    Find `executable` in ``node_modules/.bin/`` of current Python environment
+    Find `executable` in ``node_modules/.bin/`` of current Python environment.
 
     :return: Absolute ``path.Path`` instance or ``None``
     """
@@ -93,9 +102,13 @@ def which(executable):
 
 def Popen(executable, args=None, **kwargs):
     """
-    Create a subprocess for given Node.js `executable` with given sequence
-    of `args` strings and optional `kwargs` for ``zetup.Popen``, including all
-    options for ``subprocess.Popen``
+    Create a subprocess for given Node.js `executable`.
+
+    :param args:
+        Optional sequence of command argument strings
+    :param options:
+        General options for ``zetup.call``, including all options for
+        ``subprocess.call``
     """
     import nodely.bin
 
@@ -105,9 +118,13 @@ def Popen(executable, args=None, **kwargs):
 
 def call(executable, args=None, **kwargs):
     """
-    Call given Node.js `executable` with given sequence of `args` strings and
-    optional `kwargs` for ``zetup.call``, including all options for
-    ``subprocess.call``
+    Call given Node.js `executable`.
+
+    :param args:
+        Optional sequence of command argument strings
+    :param kwargs:
+        General options for ``zetup.call``, including all options for
+        ``subprocess.call``
     """
     import nodely.bin
 

@@ -34,68 +34,44 @@ from nodely import NODE_MODULES_DIR
 
 from .error import NodeCommandError
 
-__all__ = ['Command']
+zetup.module(
+    __name__, ['Command'],
+    __getitem__=lambda cmdname: __getitem__(cmdname),
+    __getattr__=lambda name: __getattr__(name),
+    __dir__=lambda: __dir__())
 
 
 #: Running on Windows?
 WIN = platform.system() == 'Windows'
 
 
-#: The original nodely.bin module object
-ORIGIN = sys.modules[__name__]
-
-
-class Module(ModuleType):
+def __getitem__(cmdname):
     """
-    Wrapper module class for :mod:`nodely.bin`.
+    Get a :class:`nodely.bin.Command` instance for given `cmdname`.
 
-    Makes module directly act as command proxy to the ``node_modules/.bin/``
-    directory via :meth:`.__getitem__` and :meth:`.__getattr__`
+    :raises OSError: if executable can not be found
     """
-
-    def __init__(self):
-        """
-        Set ``.__name__`` and ``.__doc__``, and update ``.__dict__``.
-
-        All taken from original ``nodely.bin`` module
-        """
-        super(Module, self).__init__(__name__, ORIGIN.__doc__)
-        self.__dict__.update(ORIGIN.__dict__)
-
-    def __getitem__(self, cmdname):
-        """
-        Get a :class:`nodely.bin.Command` instance for given `cmdname`.
-
-        :raises OSError: if executable can not be found
-        """
-        return Command(cmdname)
-
-    def __getattr__(self, name):
-        """
-        Get a :class:`nodely.bin.Command` instance for given command `name`.
-
-        :raises OSError: if executable cannot be found
-        """
-        try:  # first check if original module has the given attribute
-            return getattr(ORIGIN, name)
-        except AttributeError:
-            pass
-        # and don't treat special Python member names as Node.js commands
-        if name.startswith('__'):
-            raise AttributeError(
-                "{!r} has no attribute {!r}".format(self, name))
-        return self[name]
-
-    def __dir__(self):
-        cmdnames = (f.basename()
-                    for f in (NODE_MODULES_DIR / '.bin').files())
-        if WIN:  # pragma: no cover
-            cmdnames = (cmd for cmd in cmdnames if cmd.ext.lower() != '.cmd')
-        return dir(ORIGIN) + list(cmdnames)
+    return Command(cmdname)
 
 
-# replace nodely.bin module with wrapper instance
-sys.modules[__name__] = Module()
+def __getattr__(name):
+    """
+    Get a :class:`nodely.bin.Command` instance for given command `name`.
+
+    :raises OSError: if executable cannot be found
+    """
+    try:
+        return __getitem__(name)
+
+    except (IOError, OSError) as exc:
+        raise AttributeError(str(exc))
+
+
+def __dir__():
+    cmdnames = (f.basename() for f in (NODE_MODULES_DIR / '.bin').files())
+    if WIN:  # pragma: no cover
+        cmdnames = (cmd for cmd in cmdnames if cmd.ext.lower() != '.cmd')
+    return list(cmdnames)
 
 
 class Command(zetup.object, Path):
