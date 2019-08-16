@@ -1,1 +1,1 @@
-setuptools_scm >= 3.0
+zetup >= 0.2.63

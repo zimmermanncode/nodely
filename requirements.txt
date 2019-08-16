@@ -1,4 +1,4 @@
-zetup >= 0.2.61
+zetup >= 0.2.63
 moretools >= 0.1.12
 #py2 path.py ~= 11.5.0 #import path
 #py3 path.py >= 11.5.0 #import path
