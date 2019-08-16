@@ -8,7 +8,7 @@ from setuptools import setup
 dist = None
 try:
     dist = setup(
-        setup_requires=open("setup-requirements.txt").read(),
+        setup_requires=open("requirements.setup.txt").read(),
 
         use_zetup=True,
 
