@@ -13,7 +13,8 @@ def test_require_node_modules(node_package):
     nodely.uninstall(node_package)
     assert not node_package_dir.exists()
 
-    require_node_modules(dist=None, jsmodules=[
+    # HACK: Python 3.5 on Travis CI strangely reports missing coverage
+    require_node_modules(dist=None, jsmodules=[  # pragma: no cover
         node_package,
     ])
     assert node_package_dir.isdir()
