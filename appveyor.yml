@@ -18,7 +18,7 @@ install:
   - cmd: |
         %PY% -m pip install -U pip setuptools six wheel
         %PY% -m pip install -U -e .
-        %PY% -m pip install -U -r test-requirements.txt
+        %PY% -m pip install -U -r requirements.test.txt
         rem %PY% -m pip install -U tox
 
 test_script:
