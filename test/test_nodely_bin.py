@@ -1,3 +1,5 @@
+"""Test :mod:`nodely.bin`."""
+
 import os
 import platform
 import re
@@ -20,22 +22,19 @@ def test_NODE_MODULES_DIR():
 
 @pytest.mark.usefixtures('install_node_package')
 class TestModule(object):
-
-    def test__name__(self):
-        assert nodely.bin.__name__ == nodely.bin.ORIGIN.__name__
-
-    def test__doc__(self):
-        assert nodely.bin.__doc__ == nodely.bin.ORIGIN.__doc__
+    """Test module features of :mod:`nodely.bin`."""
 
     def test__getitem__(self, node_package_command):
-        command = nodely.bin[node_package_command]
+        command = nodely.bin[  # pylint: disable=unsubscriptable-object
+            node_package_command]
         assert type(command) is Command
         assert Path(command).normcase() \
             == nodely.which(node_package_command).normcase()
 
     def test__getitem__non_existent(self):
         with pytest.raises((IOError, OSError)):
-            nodely.bin['non-existent']
+            nodely.bin[  # pylint: disable=unsubscriptable-object
+                'non-existent']
 
     def test__getattr__(self, node_package_command):
         command = getattr(nodely.bin, node_package_command)
@@ -44,19 +43,23 @@ class TestModule(object):
             == nodely.which(node_package_command).normcase()
 
     def test__getattr__non_existent(self):
-        with pytest.raises((IOError, OSError)):
+        with pytest.raises(AttributeError, match=(
+                r"^{} has no attribute 'non_existent' \(.+\)$"
+                .format(re.escape(repr(nodely.bin))))):
+
             getattr(nodely.bin, 'non_existent')
 
     def test__getattr__non_existent__special__(self):
-        with pytest.raises(AttributeError) as exc:
+        with pytest.raises(AttributeError, match=(
+                r"^{} has no attribute '__non_existent__'$"
+                .format(re.escape(repr(nodely.bin))))):
+
             getattr(nodely.bin, '__non_existent__')
-        exc.match(
-            r"^{!r} has no attribute '__non_existent__'$"
-            .format(nodely.bin).replace('\\', r'\\'))
 
     def test__dir__(self):
-        cmdnames = (f.basename()
-                    for f in (nodely.bin.NODE_MODULES_DIR / '.bin').files())
+        cmdnames = (
+            f.basename()
+            for f in (nodely.bin.NODE_MODULES_DIR / '.bin').files())
         if WIN:
             cmdnames = (cmd for cmd in cmdnames if cmd.ext.lower() != '.cmd')
         assert set(cmdnames).issubset(dir(nodely.bin))
@@ -64,6 +67,7 @@ class TestModule(object):
 
 @pytest.mark.usefixtures('install_node_package')
 class TestCommand(object):
+    """Test :class:`nodely.bin.Command`."""
 
     def test__new__(self, node_package_command):
         command = Command(node_package_command)

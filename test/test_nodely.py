@@ -28,7 +28,7 @@ def test_install(node_package):
 
 
 def test_install_non_existent():
-    with pytest.raises(RuntimeError):
+    with pytest.raises(nodely.NodeCommandError):
         nodely.install('non-existent')
 
 

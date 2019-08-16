@@ -1,3 +1,5 @@
+"""Setup for ``nodely-test``, a test package using ``nodely`` entry points."""
+
 import os  # pragma: no cover
 import sys  # pragma: no cover
 
