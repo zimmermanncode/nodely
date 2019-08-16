@@ -24,6 +24,7 @@ install:
 test_script:
   - cmd: |
         %PY% -m pytest -vv --doctest-modules nodely test --cov nodely --cov test --cov-report term-missing --cov-fail-under 100
+        %PY% -m robot test
         rem %PY% -m tox -r -v
 
   - cmd: |
