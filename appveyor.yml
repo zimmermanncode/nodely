@@ -24,12 +24,15 @@ install:
 test_script:
   - cmd: |
         %PY% -m pytest -vv --doctest-modules nodely test --cov nodely --cov test --cov-report term-missing --cov-fail-under 100
-        %PY% -m robot test
         rem %PY% -m tox -r -v
 
   - cmd: |
+        %PY% -m pip uninstall --yes nodely
         %PY% -m pip install zetup[all]
         %PY% -m zetup install
+        %PY% -m robot test
+
+  - cmd: |
         rem %PY% -m zetup pytest
         %PY% -m zetup sdist
         rem %PY% -m zetup tox
