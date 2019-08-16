@@ -20,6 +20,12 @@ script:
   - python -m robot test
   - python -m tox -r -v
 
+  - python -m pip install zetup[all]
+  - python -m zetup install
+  # - python -m zetup pytest
+  - python -m zetup sdist
+  - python -m zetup tox
+
 deploy:
   provider: pypi
   user: userzimmermann
