@@ -63,13 +63,17 @@ NODE_MODULES_DIR = (Path(sys.prefix) / 'node_modules').mkdir_p()
 (NODE_MODULES_DIR / '.bin').mkdir_p()
 
 
+#: The absolute path to the Node.js ``npm`` executable.
+NPM = Path(whichcraft.which('npm')).realpath()
+
+
 def install(package):
     """
     Install given Node.js `package`.
 
     Into ``node_modules/`` of current Python environment
     """
-    command = ['npm', 'install', package]
+    command = [NPM, 'install', package]
     with Path(sys.prefix):
         status = zetup.call(command)
     if status:
@@ -82,7 +86,7 @@ def uninstall(package):
 
     From ``node_modules/`` of current Python environment
     """
-    command = ['npm', 'uninstall', package]
+    command = [NPM, 'uninstall', package]
     with Path(sys.prefix):
         status = zetup.call(command)
     if status:  # pragma: no cover
@@ -112,7 +116,8 @@ def Popen(executable, args=None, **kwargs):
     """
     import nodely.bin
 
-    command = nodely.bin[executable]
+    command = nodely.bin[  # pylint: disable=unsubscriptable-object
+        executable]
     return command.Popen(args, **kwargs)
 
 
@@ -128,5 +133,6 @@ def call(executable, args=None, **kwargs):
     """
     import nodely.bin
 
-    command = nodely.bin[executable]
+    command = nodely.bin[  # pylint: disable=unsubscriptable-object
+        executable]
     return command.call(args, **kwargs)
