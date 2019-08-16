@@ -60,7 +60,7 @@ class TestModule(object):
         cmdnames = (
             f.basename()
             for f in (nodely.bin.NODE_MODULES_DIR / '.bin').files())
-        if WIN:
+        if WIN:  # pragma: no cover
             cmdnames = (cmd for cmd in cmdnames if cmd.ext.lower() != '.cmd')
         assert set(cmdnames).issubset(dir(nodely.bin))
 
