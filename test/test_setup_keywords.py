@@ -13,7 +13,9 @@ def test_require_node_modules(node_package):
     nodely.uninstall(node_package)
     assert not node_package_dir.exists()
 
-    require_node_modules(dist=None, jsmodules=[node_package])
+    require_node_modules(dist=None, jsmodules=[
+        node_package,
+    ])
     assert node_package_dir.isdir()
 
 
