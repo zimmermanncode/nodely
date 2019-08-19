@@ -1,3 +1,14 @@
+### 0.4.0
+
+> 2019-08-19
+
+* Use `zetup.toplevel` wrapper for `nodely` package, and `zetup.module`
+  wrapper for `nodely.bin`
+* Use `whichcraft` to determine absolute path of real `npm` executable for
+  `nodely.install` and `nodely.uninstall` functions
+* Change `path.py` requirement from `~= 11.5` to `>= 11.5` for Python 3
+* Drop support for Python 3.4, and add support for 3.7
+
 ### 0.3.1
 
 > 2019-07-29
